@@ -30,24 +30,28 @@ public class Time2 {
     }
 
     // Private Help Methods
-    private int extractHour() {
-        return _secFromMid / SECONDS_PER_HOUR;
-    }
-
-    private int extractMinute() {
-        return (_secFromMid / SECONDS_PER_MINUTE) - extractHour();
-    }
-
-    private int extractSecond() {
-        return _secFromMid - (extractHour() + extractMinute());
-    }
-
     private int fromHourToSec(int number) {
         return number * SECONDS_PER_HOUR;
     }
 
     private int fromMinuteToSec(int number) {
         return number * SECONDS_PER_MINUTE;
+    }
+
+    private int fromHourToMin(int number) {
+        return number * SECONDS_PER_MINUTE; 
+    }
+
+    private int extractHour() {
+        return _secFromMid / SECONDS_PER_HOUR;
+    }
+
+    private int extractMinute() {
+        return (_secFromMid / SECONDS_PER_MINUTE) - fromHourToMin(extractHour());
+    }
+
+    private int extractSecond() {
+        return _secFromMid - (fromHourToSec(extractHour()) + fromMinuteToSec(extractMinute()));
     }
 
     private String addZero(int num) {
