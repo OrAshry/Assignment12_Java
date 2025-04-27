@@ -31,18 +31,9 @@ public class BusArrival {
      * @param s second of arrival (0-59)
      */
     public BusArrival(int lineNum, int pass, int h, int m, int s) {
-        _lineNumber = lineNum;
-        _noOfPassengers = pass;
+        _lineNumber = isValid(lineNum, MIN_LINE_NUMBER, MAX_LINE_NUMBER) ? lineNum : MIN_LINE_NUMBER;
+        _noOfPassengers = isValid(pass, MIN_PASSENGERS, MAX_PASSENGERS) ? pass : MIN_PASSENGERS;
         _arrivalTime = new Time1(h, m, s);
-
-        // Validate and correct values
-        if(_lineNumber < MIN_LINE_NUMBER || _lineNumber > MAX_LINE_NUMBER) {
-            _lineNumber = MIN_LINE_NUMBER;
-        }
-        if(_noOfPassengers < MIN_PASSENGERS || _noOfPassengers > MAX_PASSENGERS) {
-            _noOfPassengers = MIN_PASSENGERS;
-        }
-        
     }
 
     /**
@@ -54,17 +45,9 @@ public class BusArrival {
      * @param t the arrival time (Time1 object)
      */
     public BusArrival(int lineNum, int pass, Time1 t) {
-        _lineNumber = lineNum;
-        _noOfPassengers = pass;
+        _lineNumber = isValid(lineNum, MIN_LINE_NUMBER, MAX_LINE_NUMBER) ? lineNum : MIN_LINE_NUMBER;
+        _noOfPassengers = isValid(pass, MIN_PASSENGERS, MAX_PASSENGERS) ? pass : MIN_PASSENGERS;
         _arrivalTime = new Time1(t);
-
-        // Validate and correct values
-        if(_lineNumber < MIN_LINE_NUMBER || _lineNumber > MAX_LINE_NUMBER) {
-            _lineNumber = MIN_LINE_NUMBER;
-        }
-        if(_noOfPassengers < MIN_PASSENGERS || _noOfPassengers > MAX_PASSENGERS) {
-            _noOfPassengers = MIN_PASSENGERS;
-        }
     }
 
     /**
@@ -76,6 +59,20 @@ public class BusArrival {
         _lineNumber = other._lineNumber;
         _noOfPassengers = other._noOfPassengers;
         _arrivalTime = new Time1(other._arrivalTime);
+    }
+
+    // Private Help Method
+
+    /**
+    * Checks if the given number is within a valid range [minVal, maxVal].
+    *
+    * @param num the number to validate
+     * @param minVal the minimum allowed value
+    * @param maxVal the maximum allowed value
+    * @return true if num is between minVal and maxVal (inclusive), false otherwise
+    */
+    private boolean isValid(int num, int minVAL, int maxVal) {
+        return (num >= minVAL && num <= maxVal) ;
     }
 
     // Getters Methods
@@ -124,7 +121,7 @@ public class BusArrival {
      * @param num the new bus line number (1-99)
      */
     public void setLineNum(int num) {
-        if(num >= MIN_LINE_NUMBER && num <= MAX_LINE_NUMBER) {
+        if(isValid(num, MIN_LINE_NUMBER, MAX_LINE_NUMBER)) {
             _lineNumber = num;
         }
     }
@@ -135,10 +132,12 @@ public class BusArrival {
      * @param num the new number of passengers (0-70)
      */
     public void setNoOfPass (int num) {
-        if(num >= MIN_PASSENGERS && num <= MAX_PASSENGERS) {
+        if(isValid(num, MIN_PASSENGERS, MAX_PASSENGERS)) {
             _noOfPassengers = num;
         }
     }
+
+    // Other Methods
 
     /**
      * Checks if this BusArrival is equal to another.

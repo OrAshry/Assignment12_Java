@@ -18,6 +18,8 @@ public class Time2 {
     private final int SECONDS_PER_HOUR = 3600; // 60 minutes per hour × 60 seconds per minute
     private final int DOUBLE_DIGIT_THRESHOLD = 10;
 
+    // Constructors
+
     /**
      * Constructs a Time2 object with the specified hour, minute, and second.
      * Values out of range are set to 0.
@@ -27,17 +29,9 @@ public class Time2 {
      * @param s the second (0-59)
      */
     public Time2(int h, int m, int s) {
-        if(h < MIN_TIME || h > MAX_HOUR) {
-            h = MIN_TIME;
-        }
-
-        if(m < MIN_TIME || m > MAX_MIN_AND_SEC) {
-            m = MIN_TIME;
-        }
-
-        if(s < MIN_TIME || s > MAX_MIN_AND_SEC) {
-            s = MIN_TIME;
-        }
+        h = isValid(h, MAX_HOUR) ? h : MIN_TIME;
+        m = isValid(m, MAX_MIN_AND_SEC) ? m : MIN_TIME;
+        s = isValid(s, MAX_MIN_AND_SEC) ? s : MIN_TIME;
 
         _secFromMid = (h * SECONDS_PER_HOUR) + (m * SECONDS_PER_MINUTE) + s;
     }
@@ -53,6 +47,17 @@ public class Time2 {
     }
 
     // Private Help Methods
+
+    /**
+    * Checks if the given number is within a valid range [0, maxVal].
+    *
+    * @param num the number to validate
+    * @param maxVal the maximum allowed value
+    * @return true if num is between 0 and maxVal (inclusive), false otherwise
+    */
+    private boolean isValid(int num, int maxVAl) {
+        return (num >= MIN_TIME && num <= maxVAl);
+    }
 
     /**
      * Converts hours to seconds.
@@ -124,7 +129,7 @@ public class Time2 {
         return "" + num;
     }
 
-    // Get Methods
+    // Getters Methods
 
     /**
      * Returns the hour component.
@@ -153,7 +158,7 @@ public class Time2 {
         return extractSecond();
     }
 
-    // Setters Methods
+    // Setter Methods
     
     /**
      * Sets the hour if within valid range.
@@ -161,7 +166,7 @@ public class Time2 {
      * @param num the new hour (0-23)
      */
     public void setHour (int num) {
-        if(num >= MIN_TIME && num <= MAX_HOUR) {
+        if(isValid(num, MAX_HOUR)) {
             _secFromMid = _secFromMid - fromHourToSec(extractHour()) + fromHourToSec(num);
         }
     }
@@ -172,7 +177,7 @@ public class Time2 {
      * @param num the new minute (0-59)
      */
     public void setMinute(int num) {
-        if(num >= MIN_TIME && num <= MAX_MIN_AND_SEC) {
+        if(isValid(num, MAX_MIN_AND_SEC)) {
             _secFromMid = _secFromMid - fromMinuteToSec(extractMinute()) + fromMinuteToSec(num);
         }
     }
@@ -183,10 +188,12 @@ public class Time2 {
      * @param num the new second (0-59)
      */
     public void setSecond(int num) {
-        if(num >= MIN_TIME && num <= MAX_MIN_AND_SEC) {
+        if(isValid(num, MAX_MIN_AND_SEC)) {
             _secFromMid = _secFromMid - extractSecond() + num;
         }
     }
+
+    // Other Methods
 
     /**
      * Returns the number of seconds since midnight.

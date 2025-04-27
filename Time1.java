@@ -17,6 +17,8 @@ public class Time1 {
     private final int SECONDS_PER_HOUR = 3600; // 60 minutes per hour × 60 seconds per minute
     private final int DOUBLE_DIGIT_THRESHOLD = 10;
 
+    // Constructors
+
     /**
      * Constructs a Time1 object with the specified hour, minute, and seconds.
      * Values out of range are set to 0.
@@ -26,22 +28,9 @@ public class Time1 {
      * @param s the second (0-59)
      */
     public Time1(int h, int m, int s) {
-        _hour = h;
-        _minute = m;
-        _second = s;
-        
-        // Validate and correct values if out of range
-        if(_hour < MIN_TIME || _hour > MAX_HOUR) {
-            _hour = MIN_TIME;
-        }
-
-        if(_minute < MIN_TIME || _minute > MAX_MIN_AND_SEC) {
-            _minute = MIN_TIME;
-        }
-
-        if(_second < MIN_TIME || _second > MAX_MIN_AND_SEC) {
-            _second = MIN_TIME;
-        }
+        _hour = isValid(h, MAX_HOUR) ? h : MIN_TIME;
+        _minute = isValid(m, MAX_MIN_AND_SEC) ? m : MIN_TIME;
+        _second = isValid(s, MAX_MIN_AND_SEC) ? s : MIN_TIME;
     }
 
     /**
@@ -56,6 +45,21 @@ public class Time1 {
         _minute = other._minute;
         _second = other._second;
     }
+
+    // Private Help Method
+    
+    /**
+    * Checks if the given number is within a valid range [0, maxVal].
+    *
+    * @param num the number to validate
+    * @param maxVal the maximum allowed value
+    * @return true if num is between 0 and maxVal (inclusive), false otherwise
+    */
+    private boolean isValid(int num, int maxVAl) {
+        return (num >= MIN_TIME && num <= maxVAl);
+    }
+
+    // Getters Methods
 
     /**
      * Returns the hour component.
@@ -84,6 +88,8 @@ public class Time1 {
         return _second;
     }
 
+    // Setters Methods
+
     /**
      * Sets the hour if within valid range.
      * 
@@ -91,7 +97,7 @@ public class Time1 {
      */
     public void setHour(int num) {
         // Set hour only if within valid range
-        if(num >= MIN_TIME && num <= MAX_HOUR) {
+        if(isValid(num, MAX_HOUR)) {
             _hour = num;
         }
     }
@@ -103,7 +109,7 @@ public class Time1 {
      */
     public void setMinute(int num) {
         // Set minute only if within valid range
-        if(num >= MIN_TIME && num <= MAX_MIN_AND_SEC) {
+        if(isValid(num, MAX_MIN_AND_SEC)) {
             _minute = num;
         }
     }
@@ -115,10 +121,12 @@ public class Time1 {
      */
     public void setSecond(int num) {
         // Set second only if within valid range
-        if(num >= MIN_TIME && num <= MAX_MIN_AND_SEC) {
+        if(isValid(num, MAX_MIN_AND_SEC)) {
             _second = num;
         }
     }
+
+    // Other Methods
 
     /**
      * Converts the hour component to seconds.
