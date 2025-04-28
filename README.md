@@ -47,9 +47,9 @@ It handles invalid input and time formatting errors.
 
 📈 Project Status
 
-✅ Completed — passed all university-provided tests and edge case testing.
-✅ Final version published.
-✅ Release: Version 1.0
+- Completed — passed all university-provided tests and edge case testing.
+- Final version published.
+- Release: Version 1.0
 
 ---
 
