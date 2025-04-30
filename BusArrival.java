@@ -197,7 +197,7 @@ public class BusArrival {
      * @return elapsed time in minutes
      */   
     public int elapsedTime(BusArrival other) {
-        if(_arrivalTime.equals(other._arrivalTime)) {
+        if(_arrivalTime.after(other._arrivalTime)) {
             return _arrivalTime.difference(other._arrivalTime) / SECONDS_PER_MINUTE;
         }
         return other._arrivalTime.difference(_arrivalTime) / SECONDS_PER_MINUTE;
