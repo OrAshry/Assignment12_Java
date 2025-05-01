@@ -1,6 +1,6 @@
 # Bus Arrival Time Manager
 
-![GitHub release (latest by date)](https://img.shields.io/github/v/release/OrAshry/BusArrivalTimeManager)
+![Version](https://img.shields.io/badge/version-v1.1-blue)
 
 A Java project for managing bus arrivals and times, including passenger tracking, time comparison, and event handling.
 
